@@ -1,16 +1,13 @@
 {
-  "version": 2,
   "cleanUrls": true,
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
-  "builds": [
+      "destination": "index"
+    },
     {
-      "src": "public/**/*",
-      "use": "@now/static"
+      "source": "/whatsapp",
+      "destination": "https://wa.me/6285941896616"
     }
   ]
 }
