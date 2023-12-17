@@ -1,1 +1,1 @@
-console.log('Selamat datang di CiptaHost API!');
+"apikey":"invalid apikey", "userid":"invalid user id", "clientid":"invalid client id"
