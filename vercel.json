@@ -10,7 +10,7 @@
       "destination": "https://wa.me/6285941896616"
     },
     {
-      "source": "/public/api"
+      "source": "/api",
       "destination": "api.js"
     }
   ]
