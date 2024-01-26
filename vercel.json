@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "index"
+      "destination": "404.html"
     },
     {
       "source": "/whatsapp",
