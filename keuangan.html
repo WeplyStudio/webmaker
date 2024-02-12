@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catatan Keuangan</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+    }
+    .container {
+        width: 500px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+    .header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+    .content {
+        padding: 20px;
+    }
+    .button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .button:hover {
+        background-color: #0056b3;
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .overlay {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+    form label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    form input[type="text"],
+    form input[type="number"],
+    form select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    form button {
+        width: 100%;
+        padding: 10px 0;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    form button.cancel {
+        background-color: #dc3545;
+        margin-top: 8px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Catatan Keuangan</h1>
+    </div>
+    <div class="content">
+        <button class="button" onclick="openForm()">Tambah Catatan Keuangan</button>
+
+        <div class="popup" id="myForm">
+            <form id="financeForm">
+                <label for="keterangan">Keterangan:</label>
+                <input type="text" id="keterangan" name="keterangan" required>
+                <label for="jenis">Jenis:</label>
+                <select id="jenis" name="jenis">
+                    <option value="plus">Plus</option>
+                    <option value="minus">Minus</option>
+                </select>
+                <label for="jumlah">Jumlah:</label>
+                <input type="number" id="jumlah" name="jumlah" required>
+                <button type="submit" class="button">Simpan</button>
+                <button type="button" class="button cancel" onclick="closeForm()">Batal</button>
+            </form>
+        </div>
+
+        <div class="overlay" id="overlay" onclick="closeForm()"></div>
+
+        <table id="keuanganTable">
+            <thead>
+                <tr>
+                    <th>Keterangan</th>
+                    <th>Jumlah</th>
+                    <th></th> <!-- Kolom untuk tombol Hapus -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data catatan keuangan akan dimuat di sini -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Fungsi untuk membuka form popup
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    // Fungsi untuk menutup form popup
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    // Fungsi untuk menambahkan catatan keuangan ke tabel dan Local Storage
+    document.getElementById("financeForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var keterangan = document.getElementById("keterangan").value;
+        var jenis = document.getElementById("jenis").value;
+        var jumlah = parseInt(document.getElementById("jumlah").value);
+        if (jenis === "minus") {
+            jumlah *= -1;
+        }
+        var formattedJumlah = formatRupiah(jumlah.toString());
+        var table = document.getElementById("keuanganTable").getElementsByTagName("tbody")[0];
+        var newRow = table.insertRow(table.rows.length);
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        cell1.innerHTML = keterangan;
+        cell2.innerHTML = formattedJumlah;
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Hapus";
+        deleteButton.classList.add("button", "cancel");
+        deleteButton.onclick = function() {
+            table.deleteRow(newRow.rowIndex);
+            updateLocalStorage();
+        };
+        var cell3 = newRow.insertCell(2);
+        cell3.appendChild(deleteButton);
+        var keuanganData = {
+            keterangan: keterangan,
+            jumlah: jumlah
+        };
+        saveDataToLocalStorage(keuanganData);
+        closeForm();
+    });
+
+    // Fungsi untuk memuat data dari Local Storage saat halaman dimuat
+    window.addEventListener("load", function() {
+        var existingData = localStorage.getItem("keuangan");
+        if (existingData) {
+            var data = JSON.parse(existingData);
+            var table = document.getElementById("keuanganTable").getElementsByTagName("tbody")[0];
+            data.forEach(function(item) {
+                var newRow = table.insertRow(table.rows.length);
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                cell1.innerHTML = item.keterangan;
+                var formattedJumlah = formatRupiah(item.jumlah.toString());
+                cell2.innerHTML = formattedJumlah;
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Hapus";
+                deleteButton.classList.add("button", "cancel");
+                deleteButton.onclick = function() {
+                    table.deleteRow(newRow.rowIndex);
+                    updateLocalStorage();
+                };
+                var cell3 = newRow.insertCell(2);
+                cell3.appendChild(deleteButton);
+            });
+        }
+    });
+
+    // Fungsi untuk memformat jumlah dengan aturan Rupiah
+    function formatRupiah(angka) {
+        var reverse = angka.toString().split('').reverse().join('');
+        var ribuan = reverse.match(/\d{1,3}/g);
+        var formatted = ribuan.join('.').split('').reverse().join('');
+        return formatted;
+    }
+
+    // Fungsi untuk menyimpan data ke Local Storage
+    function saveDataToLocalStorage(data) {
+        var existingData = localStorage.getItem("keuangan");
+        var newData = [];
+        if (existingData) {
+            newData = JSON.parse(existingData);
+        }
+        newData.push(data);
+        localStorage.setItem("keuangan", JSON.stringify(newData));
+    }
+
+    // Fungsi untuk mengupdate data di Local Storage setelah dihapus
+    function updateLocalStorage() {
+        var tableRows = document.getElementById("keuanganTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        
+        // Memastikan setidaknya satu baris akan tetap ada setelah penghapusan
+        if (tableRows.length > 0) {
+            var newData = [];
+            for (var i = 0; i < tableRows.length; i++) {
+                var keterangan = tableRows[i].cells[0].textContent;
+                var jumlah = parseInt(tableRows[i].cells[1].textContent.replace(/\./g, "").replace(",", "."));
+                newData.push({ keterangan: keterangan, jumlah: jumlah });
+            }
+            localStorage.setItem("keuangan", JSON.stringify(newData));
+        }
+    }
+</script>
+
+</body>
+</html>
