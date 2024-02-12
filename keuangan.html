@@ -57,7 +57,6 @@
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
-        width: 80%;
     }
     .overlay {
         display: none;
@@ -125,8 +124,8 @@
                 <input type="text" id="keterangan" name="keterangan" required>
                 <label for="jenis">Jenis:</label>
                 <select id="jenis" name="jenis">
-                    <option value="plus">Pemasukkan</option>
-                    <option value="minus">Pengeluaran</option>
+                    <option value="plus">Plus</option>
+                    <option value="minus">Minus</option>
                 </select>
                 <label for="jumlah">Jumlah:</label>
                 <input type="number" id="jumlah" name="jumlah" required>
@@ -171,10 +170,10 @@
         var keterangan = document.getElementById("keterangan").value;
         var jenis = document.getElementById("jenis").value;
         var jumlah = parseInt(document.getElementById("jumlah").value);
-        if (jenis === "minus") {
-            jumlah *= -1;
-        }
         var formattedJumlah = formatRupiah(jumlah.toString());
+        if (jenis === "minus") {
+            formattedJumlah = "-" + formattedJumlah;
+        }
         var table = document.getElementById("keuanganTable").getElementsByTagName("tbody")[0];
         var newRow = table.insertRow(table.rows.length);
         var cell1 = newRow.insertCell(0);
@@ -192,7 +191,8 @@
         cell3.appendChild(deleteButton);
         var keuanganData = {
             keterangan: keterangan,
-            jumlah: jumlah
+            jumlah: jumlah,
+            jenis: jenis // Menyimpan informasi jenis (plus atau minus)
         };
         saveDataToLocalStorage(keuanganData);
         closeForm();
@@ -210,6 +210,9 @@
                 var cell2 = newRow.insertCell(1);
                 cell1.innerHTML = item.keterangan;
                 var formattedJumlah = formatRupiah(item.jumlah.toString());
+                if (item.jenis === "minus") { // Menambahkan tanda minus jika jenisnya minus
+                    formattedJumlah = "-" + formattedJumlah;
+                }
                 cell2.innerHTML = formattedJumlah;
                 var deleteButton = document.createElement("button");
                 deleteButton.textContent = "Hapus";
@@ -253,7 +256,11 @@
             for (var i = 0; i < tableRows.length; i++) {
                 var keterangan = tableRows[i].cells[0].textContent;
                 var jumlah = parseInt(tableRows[i].cells[1].textContent.replace(/\./g, "").replace(",", "."));
-                newData.push({ keterangan: keterangan, jumlah: jumlah });
+                var jenis = "plus";
+                if (tableRows[i].cells[1].textContent.includes("-")) { // Memeriksa apakah jumlah negatif
+                    jenis = "minus";
+                }
+                newData.push({ keterangan: keterangan, jumlah: jumlah, jenis: jenis });
             }
             localStorage.setItem("keuangan", JSON.stringify(newData));
         }
