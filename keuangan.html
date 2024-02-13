@@ -117,7 +117,7 @@
         <h1>Catatan Keuangan</h1>
     </div>
     <div class="content">
-        <button class="button" onclick="openForm()">Tambah Catatan Keuangan</button>
+        <center><button class="button" onclick="openForm()">Tambah Catatan Keuangan</button></center><br>
 
         <div class="popup" id="myForm">
             <form id="financeForm">
@@ -125,8 +125,8 @@
                 <input type="text" id="keterangan" name="keterangan" required>
                 <label for="jenis">Jenis:</label>
                 <select id="jenis" name="jenis">
-                    <option value="plus">Pemasukkan</option>
-                    <option value="minus">Pengeluaran</option>
+                    <option value="plus">Plus</option>
+                    <option value="minus">Minus</option>
                 </select>
                 <label for="jumlah">Jumlah:</label>
                 <input type="number" id="jumlah" name="jumlah" required>
@@ -150,6 +150,7 @@
             </tbody>
         </table>
     </div>
+    <center><p style="color:grey">Made by <a href="https://www.weply.my.id" style="text-decoration:none;color:grey">Weply</a></p></center>
 </div>
 
 <script>
@@ -183,9 +184,10 @@
         cell2.innerHTML = formattedJumlah;
         var deleteButton = document.createElement("button");
         deleteButton.textContent = "Hapus";
-        deleteButton.classList.add("button", "cancel");
+        deleteButton.classList.add("button", "cancel", "delete-button"); // Menambahkan class delete-button
         deleteButton.onclick = function() {
-            table.deleteRow(newRow.rowIndex);
+            var rowIndex = this.getAttribute("data-row-index"); // Mengambil indeks baris dari atribut data
+            table.deleteRow(rowIndex);
             updateLocalStorage();
         };
         var cell3 = newRow.insertCell(2);
@@ -205,7 +207,7 @@
         if (existingData) {
             var data = JSON.parse(existingData);
             var table = document.getElementById("keuanganTable").getElementsByTagName("tbody")[0];
-            data.forEach(function(item) {
+            data.forEach(function(item, index) {
                 var newRow = table.insertRow(table.rows.length);
                 var cell1 = newRow.insertCell(0);
                 var cell2 = newRow.insertCell(1);
@@ -217,11 +219,8 @@
                 cell2.innerHTML = formattedJumlah;
                 var deleteButton = document.createElement("button");
                 deleteButton.textContent = "Hapus";
-                deleteButton.classList.add("button", "cancel");
-                deleteButton.onclick = function() {
-                    table.deleteRow(newRow.rowIndex);
-                    updateLocalStorage();
-                };
+                deleteButton.classList.add("button", "cancel", "delete-button"); // Menambahkan class delete-button
+                deleteButton.setAttribute("data-row-index", index); // Menyimpan indeks baris sebagai atribut data
                 var cell3 = newRow.insertCell(2);
                 cell3.appendChild(deleteButton);
             });
@@ -254,16 +253,20 @@
         // Memastikan setidaknya satu baris akan tetap ada setelah penghapusan
         if (tableRows.length > 0) {
             var newData = [];
-            for (var i = 0; i < tableRows.length; i++) {
-                var keterangan = tableRows[i].cells[0].textContent;
-                var jumlah = parseInt(tableRows[i].cells[1].textContent.replace(/\./g, "").replace(",", "."));
+            Array.from(tableRows).forEach(function(row, index) {
+                var keterangan = row.cells[0].textContent;
+                var jumlah = parseInt(row.cells[1].textContent.replace(/\./g, "").replace(",", "."));
                 var jenis = "plus";
-                if (tableRows[i].cells[1].textContent.includes("-")) { // Memeriksa apakah jumlah negatif
+                if (row.cells[1].textContent.includes("-")) { // Memeriksa apakah jumlah negatif
                     jenis = "minus";
                 }
                 newData.push({ keterangan: keterangan, jumlah: jumlah, jenis: jenis });
-            }
+                var deleteButton = row.cells[2].querySelector(".delete-button");
+                deleteButton.setAttribute("data-row-index", index); // Setiap tombol hapus akan memiliki atribut data dengan indeks baris
+            });
             localStorage.setItem("keuangan", JSON.stringify(newData));
+        } else {
+            localStorage.removeItem("keuangan"); // Hapus data dari Local Storage jika tidak ada baris lagi
         }
     }
 </script>
