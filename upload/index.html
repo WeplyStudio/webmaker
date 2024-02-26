@@ -52,21 +52,52 @@
         <input type="file" accept="video/*" id="videoInput">
         <button onclick="uploadVideo()">Upload</button>
         <video controls id="videoPlayer" style="display: none;"></video>
+        <div id="videoURL" style="display: none;"></div>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-storage.js"></script>
     <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCPdfpchR58XYPjzEgtNvw4sHhc_1Frisw",
+    authDomain: "uploadweb-e3577.firebaseapp.com",
+    projectId: "uploadweb-e3577",
+    storageBucket: "uploadweb-e3577.appspot.com",
+    messagingSenderId: "836905807703",
+    appId: "1:836905807703:web:e3e95831922fe03b911812"
+        };
+        firebase.initializeApp(firebaseConfig);
+        
+        var storageRef = firebase.storage().ref();
+        
         function uploadVideo() {
             var videoInput = document.getElementById('videoInput');
             var videoPlayer = document.getElementById('videoPlayer');
-
+            var videoURL = document.getElementById('videoURL');
+        
             if (videoInput.files && videoInput.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    videoPlayer.src = e.target.result;
-                    videoPlayer.style.display = 'block';
-                }
-
-                reader.readAsDataURL(videoInput.files[0]);
+                var file = videoInput.files[0];
+                var fileName = file.name;
+        
+                var uploadTask = storageRef.child('videos/' + fileName).put(file);
+        
+                uploadTask.on('state_changed', 
+                    function(snapshot){
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                    }, 
+                    function(error) {
+                        console.error('Error uploading: ', error);
+                    }, 
+                    function() {
+                        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                            console.log('File available at', downloadURL);
+                            videoPlayer.src = downloadURL;
+                            videoPlayer.style.display = 'block';
+                            videoURL.innerHTML = '<a href="' + downloadURL + '" target="_blank">Buka Video</a>';
+                            videoURL.style.display = 'block';
+                        });
+                    }
+                );
             }
         }
     </script>
