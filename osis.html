@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Osis</title>
+<style>
+/* Style untuk alert */
+.prank-alert {
+  position: fixed;
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  z-index: 9999; /* Pastikan alert berada di atas konten lain */
+}
+</style>
+<script>
+function showPrankAlert() {
+  // Buat elemen div untuk alert
+  var alertDiv = document.createElement("div");
+  alertDiv.classList.add("prank-alert");
+  alertDiv.innerText = "Mengandung virus!!!";
+
+  // Tentukan posisi acak
+  var randomX = Math.random() * (window.innerWidth - alertDiv.offsetWidth);
+  var randomY = Math.random() * (window.innerHeight - alertDiv.offsetHeight);
+  alertDiv.style.top = randomY + "px";
+  alertDiv.style.left = randomX + "px";
+
+  // Tambahkan alert ke dalam body
+  document.body.appendChild(alertDiv);
+}
+
+// Panggil fungsi pertama kali untuk memulai serangkaian alert
+setInterval(showPrankAlert, 100); // Panggil setiap detik
+</script>
+</head>
+<body>
+<h2></h2>
+</body>
+</html>
