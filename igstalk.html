@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Followers Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Instagram Followers Checker</h1>
+    <input type="text" id="username" placeholder="Enter Instagram Username">
+    <button onclick="getFollowers()">Check Followers</button>
+    <p id="followersCount"></p>
+  </div>
+  <script>
+    async function getFollowers() {
+      const username = document.getElementById('username').value;
+      if (username) {
+        try {
+          const response = await fetch(`https://www.instagram.com/${username}/?__a=1`);
+          const data = await response.json();
+          const followersCount = data.graphql.user.edge_followed_by.count;
+          document.getElementById('followersCount').textContent = `Total Followers: ${followersCount}`;
+        } catch (error) {
+          document.getElementById('followersCount').textContent = 'Error occurred. Please try again.';
+        }
+      } else {
+        document.getElementById('followersCount').textContent = 'Please enter a username.';
+      }
+    }
+  </script>
+</body>
+</html>
