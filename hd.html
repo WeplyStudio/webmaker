@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Enhancer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #result {
+            margin-top: 20px;
+        }
+        #output {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Enhancer</h1>
+        <input type="file" id="upload" accept="image/*">
+        <button id="enhance-btn">Enhance Image</button>
+        <div id="result">
+            <h2>Processed Image:</h2>
+            <canvas id="output"></canvas>
+            <br>
+            <button id="download-btn" style="display:none;">Download Enhanced Image</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ml5/0.6.0/ml5.min.js"></script>
+    <script>
+        document.getElementById('enhance-btn').addEventListener('click', () => {
+            const fileInput = document.getElementById('upload');
+            if (fileInput.files.length === 0) {
+                alert('Please upload an image first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const inputImage = new Image();
+                inputImage.src = e.target.result;
+                inputImage.onload = () => {
+                    enhanceImage(inputImage);
+                };
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function enhanceImage(img) {
+            const canvas = document.getElementById('output');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            ml5.imageEnhancement('https://path-to-your-model/model.json', (model) => {
+                console.log('Model Loaded!');
+                model.enhance(img, (err, result) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    ctx.putImageData(result, 0, 0);
+                    document.getElementById('download-btn').style.display = 'inline-block';
+                });
+            });
+        }
+
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const canvas = document.getElementById('output');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = 'enhanced-image.jpg';
+            link.click();
+        });
+    </script>
+</body>
+</html>
