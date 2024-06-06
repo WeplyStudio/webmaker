@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        #chat-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #header {
+            background-color: #128C7E;
+            color: #fff;
+            padding: 15px 0;
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+        }
+
+        #user-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #user-profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        #user-profile h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        #chat-log {
+            padding: 20px;
+            overflow-y: scroll;
+            flex-grow: 1;
+        }
+
+        .chat-card {
+            background-color: #128C7E;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            color: white;
+        }
+
+        .user-message {
+            text-align: left;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            text-align: left;
+            margin-right: auto;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            height: 80px
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        #send-button {
+            padding: 10px 20px;
+            background-color: #128C7E;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #send-button:hover {
+            background-color: #0A665F;
+        }
+
+        #delete-button {
+            padding: 10px 20px;
+            background-color: #E74C3C;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #delete-button:hover {
+            background-color: #C0392B;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="header">
+            <div id="user-profile">
+                <img src="https://matchboxid.my.id/logo.png" alt="User Avatar">
+                <h2>Zenu AI</h2>
+            </div>
+        </div>
+        <div id="chat-log"></div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Ketik pesan..." value="hai">
+            <button id="send-button">Kirim</button>&ensp;
+            <button id="delete-button">Hapus</button>
+        </div>
+    </div>
+    <script src="chatbot.js"></script>
+</body>
+</html>
