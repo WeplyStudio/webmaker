@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinFess</title>
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f8fa;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header Styles */
+        header {
+            background: #1E2A38;
+            color: #fff;
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            background: #1E2A38;
+            color: #fff;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .hero .container {
+            padding: 0 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            background: #FFD700;
+            color: #000;
+            padding: 0.75rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .fa {
+            color: #1E2A38;
+        }
+
+        .btn:hover {
+            background: #FFCC00;
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: #fff;
+            z-index: -1;
+            border-radius: 60% 60% 0 0 / 50% 50% 0 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 6px;
+            background: #1E2A38;
+            margin: 1.5rem auto;
+            border-radius: 3px;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .feature {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            flex: 1 1 30%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Pricing Section */
+        .pricing-table {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .pricing-plan {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 2.5rem;
+            flex: 1 1 30%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-plan h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .pricing-plan p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .pricing-plan ul {
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-plan ul li {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: #666;
+        }
+
+        /* Testimonial Section */
+        .testimonials {
+            background: #1E2A38;
+            color: #fff;
+            padding: 5rem 3rem;
+        }
+
+        .testimonials .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .testimonials .testimonial {
+            background: #fff;
+            color: #333;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .testimonials .testimonial p {
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials .testimonial .author {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 5rem 3rem;
+        }
+
+        .blog .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .blog-posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .blog-post {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex: 1 1 30%;
+        }
+
+        .blog-post img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .blog-post .content {
+            padding: 1.5rem;
+        }
+
+        .blog-post h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .blog-post p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .blog-post .btn {
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        /* Team Section */
+        .team {
+            background: #f7f8fa;
+            padding: 5rem 3rem;
+        }
+
+        .team .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 2rem;
+            flex: 1 1 30%;
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 5rem 3rem;
+        }
+
+        .gallery .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .gallery-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gallery-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-images img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Contact Section */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        form input, form textarea {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        form button {
+            padding: 1rem;
+            border: none;
+            background: #FFD700;
+            color: #000;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        form button:hover {
+            background: #FFCC00;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #1E2A38;
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 1rem;
+            }
+
+            .features, .pricing-table, .blog-posts, .team-members {
+                flex-direction: column;
+            }
+
+            .feature, .pricing-plan, .blog-post, .team-member {
+                flex: 1 1 100%;
+            }
+
+            .hero h2 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            form {
+                padding: 2rem;
+            }
+
+            form input, form textarea {
+                font-size: 0.9rem;
+            }
+
+            form button {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <center>
+                <h1>Minfess</h1>
+            </div>
+        </nav>
+        <div class="hero">
+            <div class="container">
+                <h2>Kirim pesan kepada siapapun secara anonymous! 100% aman!</h2>
+                <p>Kirim pesan apapun kepada siapapun dan kapanpun secara anonymous! confess dan menfess kepada pasangan dan orang lain!</p>
+                <a href="#contact" class="btn">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <i class="fa fa-comments" style="font-size: 50px"></i>
+                    <h3>Template Chat</h3>
+                    <p>Kirim pesan dengan gambar, video, file, atau audio kepada siapapun! dokumen tidak akan disimpan dan akan terhapus otomatis dalam 30 menit!</p>
+                </div>
+                <div class="feature">
+                    <i class="fa fa-bar-chart" style="font-size: 50px"></i>
+                    <h3>Analitik Dashboard</h3>
+                    <p>Lihat progress pesan yang anda kirim, apakah sudah dibaca atau sedang dibalas!</p>
+                </div>
+                <div class="feature">
+                    <i class="fa fa-user" style="font-size: 50px"></i>
+                    <h3>24/7 Layanan Pelanggan</h3>
+                    <p>Kami siap membantu apapun masalah anda, kapanpun, dan dimana pun anda berada selama 24/7 jam!.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="container">
+            <h2>Pricing</h2>
+            <div class="pricing-table">
+                <div class="pricing-plan">
+                    <i class="fa fa-user" style="font-size: 50px"></i>
+                    <h3>Free Trial</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp99.000</s></p>
+                    <p>Rp0</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa aktif 3 hari</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;10 Limit pesan</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=free+trial!" class="btn">Free Trial!</a>
+                </div>
+                <div class="pricing-plan">
+                    <i class="fa fa-star" style="font-size: 50px"></i>
+                    <h3>Paket Awal</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp99.000 / Bulan</s></p>
+                    <p>Rp20.000 / Bulan</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Template Chat</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;100 limit kontak</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung gambar</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung video</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung file</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa Aktif 7 Hari</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=hai+Minfess+saya+ingin+membeli+paket+awal!" class="btn">Buy Now!</a>
+                </div>
+                <div class="pricing-plan">
+                    <i class="fa fa-diamond" style="font-size: 50px"></i>
+                    <h3>Paket Tengah</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp329.000 / Bulan</s></p>
+                    <p>Rp50.000 / Bulan</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Template Chat</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;300 limit kontak</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung gambar</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung video</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung file</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa Aktif 30 Hari</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=hai+Minfess+saya+ingin+membeli+paket+tengah!" class="btn">Buy Now!</a>
+                </div>
+                <div class="pricing-plan">
+                    <i class="fa fa-brain" style="font-size: 50px"></i>
+                    <h3>Paket Akhir</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp499.000 / Bulan</s></p>
+                    <p>Rp125.000 / Bulan</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Template Chat</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;650 limit kontak</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung gambar</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung video</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung file</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa Aktif 30 Hari</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=hai+Minfess+saya+ingin+membeli+paket+akhir!" class="btn">Buy Now!</a>
+                </div>
+                <div class="pricing-plan">
+                    <i class="fa fa-paper-plane" style="font-size: 50px"></i>
+                    <h3>Paket VIP</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp749.000 / Bulan</s></p>
+                    <p>Rp200.000 / Bulan</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Template Chat</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Limit pesan tanpa batas</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung gambar</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung video</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung file</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa Aktif 30 Hari</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=hai+Minfess+saya+ingin+membeli+paket+vip" class="btn">Buy Now!</a>
+                </div>
+                <div class="pricing-plan">
+                    <i class="fa fa-rocket" style="font-size: 50px"></i>
+                    <h3>Paket Lifetime</h3>
+                    <div style="line-height:0px">
+                    <p style="color:grey;font-size:15px"><s>Rp999.000</s></p>
+                    <p>Rp500.000</p>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Template Chat</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Limit pesan tanpa batas</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung gambar</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung video</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Mendukung file</li>
+                        <li><i class="fa fa-circle-check"></i>&ensp;Masa Aktif Selamanya</li>
+                    </ul>
+                    <a href="https://wa.me/6283898777054?text=hai+Minfess+saya+ingin+membeli+paket+lifetime!" class="btn">Buy Now!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>Testimonial</h2>
+            <div class="testimonial">
+                <p>"Cocok buat ngeprank temen atau sahabat pas lagi gabut! makasih Minfess!!"</p>
+                <div class="author">Ahmad</div>
+            </div>
+            <div class="testimonial">
+                <p>"Karna Minfess jadi lebih gampang buat kirim pesan promosi karna bisa broadcast sampe 1000 kontak langsung! recommend banget sih ini!"</p>
+                <div class="author">Rifky</div>
+            </div>
+            <div class="testimonial">
+                <p>"Lumayan buat ngechat tukang penipu karna bisa kirim pesan pake berbagai nomer yang udah disediain sama Minfess! Thanks Minfess!!"</p>
+                <div class="author">Dani</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://weplystudio.my.id/logo.jpg" alt="Team Member 1">
+                    <h3>Weply Studio</h3>
+                    <p>Development Team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding:20px">
+        <p>&copy; 2024 Minfess, Development by Weply Studio.</p>
+    </footer>
+</body>
+</html>
+<script src="https://kit.fontawesome.com/571257941d.js" crossorigin="anonymous"></script>
