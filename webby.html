@@ -1,211 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Webby Free Website</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webby - Free Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body>
-    <header>
-    <h1>Webby - Free Website</h1>
+<body class="bg-gray-900 text-white">
+
+    <!-- Header -->
+    <header class="bg-gray-800 py-4 text-center shadow-lg">
+        <h1 class="text-2xl font-bold">Webby - Free Website</h1>
     </header>
-    <div class="form">
-        <form class="card">
-            <h2>Make Your Website!</h2>
-            <select id="pilihanTagihan" onchange="tampilkanTagihan()">
-    <option value="" disabled selected>Pilih paket anda!</option>
-    <option value="tagihan1">Paket Trial</option>
-    <option value="tagihan2">Paket Standart</option>
-    <option value="tagihan3">Paket Bisnis</option>
-    <option value="tagihan4">Paket Perusahaan</option>
-</select>
-        </form>
-        <div class="card" id="tagihanText"></div>
+
+    <!-- Form Section -->
+    <div class="max-w-2xl mx-auto mt-10 p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h2 class="text-xl font-semibold text-center">Make Your Website!</h2>
+        <select id="pilihanTagihan" onchange="tampilkanTagihan()" class="w-full p-3 mt-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:ring focus:ring-gray-500">
+            <option value="" disabled selected>Pilih paket anda!</option>
+            <option value="tagihan1">Paket Trial</option>
+            <option value="tagihan2">Paket Standart</option>
+            <option value="tagihan3">Paket Bisnis</option>
+            <option value="tagihan4">Paket Perusahaan</option>
+        </select>
+    </div>
+
+    <!-- Paket Detail -->
+    <div id="tagihanText" class="max-w-2xl mx-auto mt-6 p-6 bg-gray-800 rounded-lg shadow-lg hidden"></div>
+
+    <!-- Why Choose Webby -->
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-gray-800 rounded-lg shadow-lg text-center">
+        <h2 class="text-2xl font-semibold">Mengapa memilih Webby?</h2>
+        <div class="mt-6 space-y-6">
+            <div>
+                <i class="bi bi-fast-forward text-5xl text-blue-500"></i>
+                <h3 class="text-xl font-semibold mt-2">Proses Cepat</h3>
+                <p class="text-gray-400">Layanan website dengan server terbaik, anti delay, dan teknologi canggih untuk pengalaman tanpa gangguan.</p>
+            </div>
+            <div>
+                <i class="bi bi-tag text-5xl text-green-500"></i>
+                <h3 class="text-xl font-semibold mt-2">Harga Terbaik</h3>
+                <p class="text-gray-400">Akses cepat dan handal dengan harga terjangkau untuk kualitas maksimal.</p>
+            </div>
         </div>
-    <div class="card">
-        <center>
-            <h2>Mengapa memilih webby?</h2>
-            <hr>
-            <i class="bi bi-fast-forward" style="font-size: 50px;padding:0px;margin:0px"></i>
-            <h2 style="padding:0px;margin:0px">Proses Cepat</h2>
-            <p style="margin:0px;padding:0px">Layanan website dengan proses cepat, server terbaik, dan anti delay memastikan pengalaman online yang lancar dan responsif. Dengan teknologi canggih dan infrastruktur server yang andal, akses cepat dijamin tanpa gangguan. Ini meningkatkan kepuasan pengguna dan efektivitas keseluruhan pengalaman online.</p>
-            <hr>
-            <i class="bi bi-tag" style="font-size: 50px;padding:0px;margin:0px"></i>
-            <h2 style="padding:0px;margin:0px">Harga Terbaik</h2>
-            <p style="margin:0px;padding:0px">Penyedia hosting murah menawarkan akses cepat dan handal dengan harga terjangkau. Layanan ini memungkinkan pengguna untuk membangun situs web tanpa mengorbankan kualitas atau performa.</p>
-        </center>
     </div>
-    <div class="card">
-        <h2>Your Information</h2>
-        <hr>
-        <center>
-        <h3>Jam Digital</h3>
-        <div id="clock"></div>
-        <hr>
-        <h3>IP Address Anda</h3>
-        <div id="ip-address"></div>
-        <hr>
-        <h3>Visitor</h3>
-        <div id="visitor-count"></div>
-        </center>
+
+    <!-- User Information -->
+    <div class="max-w-2xl mx-auto mt-10 p-6 bg-gray-800 rounded-lg shadow-lg text-center">
+        <h2 class="text-xl font-semibold">Your Information</h2>
+        <hr class="my-4 border-gray-600">
+        <h3 class="text-lg font-semibold">Jam Digital</h3>
+        <div id="clock" class="text-3xl font-bold mt-2"></div>
+        <hr class="my-4 border-gray-600">
+        <h3 class="text-lg font-semibold">IP Address Anda</h3>
+        <div id="ip-address" class="text-xl font-medium mt-2"></div>
+        <hr class="my-4 border-gray-600">
+        <h3 class="text-lg font-semibold">Visitor</h3>
+        <div id="visitor-count" class="text-xl font-medium mt-2"></div>
     </div>
-    <br>
-    <br>
-    <footer>Made with ❤ for Webby</footer>
-    <br>
+
+    <!-- Footer -->
+    <footer class="text-center mt-10 text-gray-400 text-sm py-4">
+        Made with ❤️ for Webby
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            document.getElementById("clock").innerText = 
+                (hours < 10 ? "0" : "") + hours + ":" +
+                (minutes < 10 ? "0" : "") + minutes + ":" +
+                (seconds < 10 ? "0" : "") + seconds;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function getIPAddress() {
+            fetch('https://ipinfo.io/json')
+                .then(response => response.json())
+                .then(data => document.getElementById('ip-address').innerText = data.ip)
+                .catch(error => console.error('Error:', error));
+        }
+        getIPAddress();
+
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount') || 0;
+            count++;
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitor-count').innerText = 'Jumlah pengunjung: ' + count;
+        }
+        updateVisitorCount();
+
+        function tampilkanTagihan() {
+            let select = document.getElementById("pilihanTagihan");
+            let selectedOption = select.value;
+            let tagihanText = document.getElementById("tagihanText");
+            let linkPrefix = "https://wa.me/6285941896616?text=";
+
+            let paket = {
+                tagihan1: {nama: "Trial", harga: "Free", domain: ".weply.my.id", cpanel: "❌", wa: "❌", cloudflare: "✅", link: "free+trial"},
+                tagihan2: {nama: "Standart", harga: "Rp750.000 / 5 Tahun", domain: "my.id", cpanel: "✅", wa: "❌", cloudflare: "✅", link: "buy+paket+standart"},
+                tagihan3: {nama: "Bisnis", harga: "Rp1.800.000 / 5 Tahun", domain: ".com", cpanel: "✅", wa: "✅", cloudflare: "✅", link: "buy+paket+bisnis"},
+                tagihan4: {nama: "Perusahaan", harga: "Rp2.150.000 / 5 Tahun", domain: ".com", cpanel: "✅", wa: "✅", cloudflare: "✅", link: "buy+paket+perusahaan"}
+            };
+
+            if (paket[selectedOption]) {
+                let p = paket[selectedOption];
+                tagihanText.innerHTML = `
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold">Informasi</h2>
+                        <p>Paket: <strong>${p.nama}</strong></p>
+                        <p>Harga: <strong>${p.harga}</strong></p>
+                        <p>Domain: <strong>${p.domain}</strong></p>
+                        <p>cPanel: ${p.cpanel}</p>
+                        <p>WhatsApp System: ${p.wa}</p>
+                        <p>CloudFlare Protection: ${p.cloudflare}</p>
+                        <a href="${linkPrefix}${p.link}" class="mt-4 inline-block px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold transition">
+                            Make The Website
+                        </a>
+                    </div>
+                `;
+                tagihanText.classList.remove("hidden");
+            } else {
+                tagihanText.classList.add("hidden");
+            }
+        }
+    </script>
+
 </body>
 </html>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<script>
-function updateTime() {
-    var now = new Date();
-    var hours = now.getHours();
-    var minutes = now.getMinutes();
-    var seconds = now.getSeconds();
-    
-    // Menambahkan angka 0 jika jam, menit, atau detik kurang dari 10
-    hours = (hours < 10 ? "0" : "") + hours;
-    minutes = (minutes < 10 ? "0" : "") + minutes;
-    seconds = (seconds < 10 ? "0" : "") + seconds;
-
-    document.getElementById("clock").innerText = hours + ":" + minutes + ":" + seconds;
-}
-
-// Memperbarui jam setiap detik
-setInterval(updateTime, 1000);
-
-// Panggil fungsi updateTime saat halaman dimuat
-updateTime();
-</script>
-<script>
-// Mendapatkan IP Address pengguna menggunakan layanan ipinfo.io
-function getIPAddress() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://ipinfo.io/json', true);
-    xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            var response = JSON.parse(xhr.responseText);
-            var ipAddress = response.ip;
-            document.getElementById('ip-address').innerText =  ipAddress;
-        } else {
-            console.error('Terjadi kesalahan saat mendapatkan IP Address: ' + xhr.statusText);
-        }
-    };
-    xhr.onerror = function () {
-        console.error('Terjadi kesalahan saat membuat permintaan.');
-    };
-    xhr.send();
-}
-
-// Panggil fungsi getIPAddress saat halaman dimuat
-getIPAddress();
-</script>
-<script>
-    // Fungsi untuk mengupdate jumlah pengunjung
-function updateVisitorCount() {
-    // Cek apakah ada jumlah pengunjung tersimpan di localStorage
-    if(localStorage.getItem('visitorCount') === null) {
-        // Jika belum ada, inisialisasi jumlah pengunjung dengan 1
-        localStorage.setItem('visitorCount', '1');
-    } else {
-        // Jika sudah ada, tambahkan satu ke jumlah pengunjung yang tersimpan
-        var currentCount = parseInt(localStorage.getItem('visitorCount'));
-        currentCount++;
-        localStorage.setItem('visitorCount', currentCount.toString());
-    }
-    // Tampilkan jumlah pengunjung di halaman HTML
-    document.getElementById('visitor-count').innerText = 'Jumlah pengunjung: ' + localStorage.getItem('visitorCount');
-}
-
-// Panggil fungsi updateVisitorCount saat halaman dimuat
-updateVisitorCount();
-
-</script>
-<script>
-    function tampilkanTagihan() {
-    var select = document.getElementById("pilihanTagihan");
-    var selectedOption = select.options[select.selectedIndex].value;
-    var tagihanText = document.getElementById("tagihanText");
-
-var text1 = '"https://wa.me/6285941896616?text=free+trial"';
-var text2 = '"https://wa.me/6285941896616?text=buy+paket+standart"';
-var text3 = '"https://wa.me/6285941896616?text=buy+paket+bisnis"';
-var text4 = '"https://wa.me/6285941896616?text=buy+paket+perusahaan"';
-    switch(selectedOption) {
-        case "tagihan1":
-            tagihanText.innerHTML = "<center><h2>Informasi</h2>Paket : starter<br>Price : Free<br>Domain : .weply.my.id<br>Masa aktif : 5 Tahun<br>cPanel : ❌<br>WhatsApp System : ❌<br>CloudFlare Protection : ✅<br><br><a href=" + text1 + "><button><strong>Make The Website</button></a></center>";
-            break;
-        case "tagihan2":
-            tagihanText.innerHTML = "<center><h2>Informasi</h2>Paket : standart<br>Price : Rp750.000 / 5 Tahun<br>Domain : my.id<br>Masa aktif : 5 Tahun<br>cPanel : ✅<br>WhatsApp System : ❌<br>CloudFlare Protection : ✅<br><br><a href=" + text2 + "><button><strong>Make The Website</button></a></center>";
-            break;
-            case "tagihan3":
-            tagihanText.innerHTML = "<center><h2>Informasi</h2>Paket : starter<br>Price : Rp1.800.000 / 5 Tahun<br>Domain : .com<br>Masa aktif : 5 Tahun<br>cPanel : ✅<br>WhatsApp System : ✅<br>CloudFlare Protection : ✅<br><br><a href=" + text3 + "><button><strong>Make The Website</button></a></center>";
-            break;
-            case "tagihan4":
-            tagihanText.innerHTML = "<center><h2>Informasi</h2>Paket : starter<br>Price : Rp2.150.000 / 5 Tahun<br>Domain : .com<br>Masa aktif : 5 Tahun<br>cPanel : ✅<br>WhatsApp System : ✅<br>CloudFlare Protection : ✅<br><br><a href=" + text4 + "><button><strong>Make The Website</button></a></center>";
-            break;
-            default:
-            tagihanText.innerHTML = "";
-            break;
-    }
-    
-}
-
-</script>
-<style>
-    body, header {
-    margin: 0; /* Menghilangkan margin */
-    padding: 0; /* Menghilangkan padding */
-}
-
-h1 {
-    text-align:center;
-    font-size: 25px;
-    padding: 8px;
-}
-
-h2 {
-    text-align: center;
-    padding: 0px
-}
-
-.card {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #eee;
-  padding: 10px;
-  margin: 20px;
-}
-
-select {
-    text-align: center;
-    height: 35px;
-    width: 100%;
-    border-radius: 15px;
-    background-color: #ddd;
-}
-
-footer {
-    text-align: center;
-    font-size: 15px;
-    color: grey;
-}
-
-header {
-    background-color: #333; 
-    color: #fff;
-    padding: 10px 0;
-    margin: 0%;
-    width: 100%;
-    box-sizing: border-box;
-    height: 30%;
-}
-button {
-    height: 45px;
-    width: 80%;
-    font-size: 15px;
-    border-radius: 18px;
-}
-</style>
